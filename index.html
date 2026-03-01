@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome to Sweet Cravings</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base styles */
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #FFC0CB, #87CEEB); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Main box */
+        .box {
+            position: relative;
+            text-align: center;
+            background: linear-gradient(145deg, #C8A2C8, #F5F5DC); 
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            animation: fadeIn 1.2s ease forwards;
+            z-index: 1;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: scale(0.9); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 1.6em;
+            color: #6d4c41;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #661b2e;
+        }
+
+        p {
+            font-size: 1em;
+            margin: 8px 0 15px;
+            color: #7d5a50;
+        }
+
+        /* Button */
+        a {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 22px;
+            font-size: 1em;
+            background: #ff8fa3;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            transform: scale(1.05);
+        }
+
+        /* Footer */
+        footer {
+            position: absolute;
+            bottom: 10px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            background: linear-gradient(145deg, #C8A2C8, #F5F5DC); 
+            padding: 8px 12px;
+            border-radius: 15px;
+            color: #661b2e;
+            font-size: 0.8em;
+        }
+
+        /* Sparkles */
+        .sparkle {
+            width: 8px;
+            height: 8px;
+            position: absolute;
+            background: #fff;
+            border-radius: 50%;
+            opacity: 0.8;
+            animation: sparkleMove linear infinite;
+        }
+
+        @keyframes sparkleMove {
+            0% { transform: translateY(0) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-100px) scale(1.5); opacity: 0.3; }
+            100% { transform: translateY(-200px) scale(0); opacity: 0; }
+        }
+
+        /* Floating emoji */
+        .emoji {
+            position: fixed;
+            font-size: 24px;
+            animation: floatUp 1.5s ease-out forwards;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1); }
+            100% { opacity: 0; transform: translateY(-80px) scale(1.5); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sparkles -->
+    <div class="sparkle" style="left:10%; animation-duration: 5s;"></div>
+    <div class="sparkle" style="left:30%; animation-duration: 7s;"></div>
+    <div class="sparkle" style="left:50%; animation-duration: 6s;"></div>
+    <div class="sparkle" style="left:70%; animation-duration: 5.5s;"></div>
+    <div class="sparkle" style="left:85%; animation-duration: 8s;"></div>
+
+    <!-- Main box -->
+    <div class="box">
+        <h1>🍰 Welcome to Cutebites Pamphlet 🍝</h1>
+        <h2>ᶠᵒᵒᵈ ᶦⁿᵍʳᵉᵈᶦᵉⁿᵗˢ ᵃʳᵒᵘⁿᵈ ᵗʰᵉ ʷᵒʳˡᵈ</h2>
+        <p>💕 Your cozy online recipe book ✨</p>
+        <a href="pages.html" onclick="createEmojis(event)">Enter Recipes</a>
+    </div>
+
+    <footer>
+        <p>© 2026 RockyJames B. Gepte & Fatima Nhezreen D. Serabani | Sandalwood | ICT</p>
+    </footer>
+
+    <script>
+        function createEmojis(event) {
+            const emojis = ["✨","🍰","💕","😋","🍝","🧁"];
+            for (let i = 0; i < 6; i++) {
+                const emoji = document.createElement("div");
+                emoji.classList.add("emoji");
+                emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+                emoji.style.left = (event.clientX + Math.random() * 40 - 20) + "px";
+                emoji.style.top = (event.clientY + Math.random() * 20 - 10) + "px";
+                document.body.appendChild(emoji);
+                setTimeout(() => emoji.remove(), 1500);
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>World Recipes & Desserts</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffe5ec, #dab1da, #e0f7fa);
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 95%;
+    max-width: 1200px;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 40px;
+    color: #5a3e36;
+}
+
+/* Back button container */
+.back-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-8px);
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 20px;
+}
+
+.card-content h2 {
+    margin: 0 0 10px;
+    color: #6d4c41;
+}
+
+/* Pink buttons */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: #ff8fa3;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.4s;
+    box-shadow: 0 6px 15px rgba(255,143,163,0.5);
+}
+
+.btn:hover {
+    background: #ff6f91;
+    transform: scale(1.1);
+    box-shadow: 0 10px 20px rgba(255,143,163,0.6);
+}
+
+/* Floating emoji style */
+.emoji {
+    position: fixed;
+    font-size: 24px;
+    animation: floatUp 1.5s ease-out forwards;
+    pointer-events: none;
+    z-index: 999;
+}
+
+@keyframes floatUp {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-80px) scale(1.5);
+    }
+}
+
+/* "More coming soon" */
+.more-soon {
+    text-align:center;
+    margin-top:30px;
+    color:#ff8fa3;
+    font-size:1.3em;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Back to Welcome Page Button -->
+    <div class="back-container">
+        <a href="welcome.html" class="btn" onclick="createEmojis(event)">⬅ Back to Welcome Page</a>
+    </div>
+
+    <h1>🌍 World Recipes & Desserts 🌍</h1>
+
+   <div class="grid">
+
+    <!-- ===== MAIN DISHES ===== -->
+
+    <div class="card"><img src="lasagna.jpg"><div class="card-content"><h2>Lasagna</h2><a href="recipe.html?dish=lasagna" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="ratatouille.jpg"><div class="card-content"><h2>Ratatouille</h2><a href="recipe.html?dish=ratatouille" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="Brisket.jpg"><div class="card-content"><h2>Brisket</h2><a href="recipe.html?dish=brisket" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="padthai.jpg"><div class="card-content"><h2>Pad Thai</h2><a href="recipe.html?dish=padthai" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="pierogi.jpg"><div class="card-content"><h2>Pierogi</h2><a href="recipe.html?dish=pierogi" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="biryani.jpg"><div class="card-content"><h2>Biryani</h2><a href="recipe.html?dish=biryani" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="paella.jpg"><div class="card-content"><h2>Paella</h2><a href="recipe.html?dish=paella" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="goulash.jpg"><div class="card-content"><h2>Goulash</h2><a href="recipe.html?dish=goulash" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="rotisserie.jpg"><div class="card-content"><h2>Rotisserie Chicken</h2><a href="recipe.html?dish=rotisserie" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="pizza.jpg"><div class="card-content"><h2>Pizza</h2><a href="recipe.html?dish=pizza" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="bibimbap.jpg"><div class="card-content"><h2>Bibimbap</h2><a href="recipe.html?dish=bibimbap" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="dumplings.jpg"><div class="card-content"><h2>Dumplings</h2><a href="recipe.html?dish=dumplings" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="poutine.jpg"><div class="card-content"><h2>Poutine</h2><a href="recipe.html?dish=poutine" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="shawarma.jpg"><div class="card-content"><h2>Shawarma</h2><a href="recipe.html?dish=shawarma" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="chowmein.jpg"><div class="card-content"><h2>Chow Mein</h2><a href="recipe.html?dish=chowmein" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="enchiladas.jpg"><div class="card-content"><h2>Enchiladas</h2><a href="recipe.html?dish=enchiladas" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="ramen.jpg"><div class="card-content"><h2>Ramen</h2><a href="recipe.html?dish=ramen" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+    
+    <div class="card"><img src="carbonara.jpg"><div class="card-content"><h2>Carbonara</h2><a href="recipe.html?dish=carbonara" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+    
+    <div class="card"><img src="adobo.jpg"><div class="card-content"><h2>Adobo</h2><a href="recipe.html?dish=adobo" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+    
+    <div class="card"><img src="sinigang.jpg"><div class="card-content"><h2>Sinigang</h2><a href="recipe.html?dish=sinigang" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+    
+    <div class="card"><img src="lechon.jpg"><div class="card-content"><h2>Lechon</h2><a href="recipe.html?dish=lechon" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+    
+    <div class="card"><img src="chickeninasal.jpg"><div class="card-content"><h2>Chicken Inasal</h2><a href="recipe.html?dish=chickeninasal" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+</div>
+
+<h1 style="margin-top:60px; text-align:center;">🍰 Desserts 🍰</h1>
+
+<div class="grid">
+
+    <!-- ===== DESSERTS ===== -->
+
+    <div class="card"><img src="cake.jpg"><div class="card-content"><h2>Chocolate Cake</h2><a href="recipe.html?dish=cake" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="cupcakes.jpg"><div class="card-content"><h2>Cupcakes</h2><a href="recipe.html?dish=cupcakes" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="brownies.jpg"><div class="card-content"><h2>Brownies</h2><a href="recipe.html?dish=brownies" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="croissant.jpg"><div class="card-content"><h2>Croissant</h2><a href="recipe.html?dish=croissant" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="s'mores.jpg"><div class="card-content"><h2>S'mores</h2><a href="recipe.html?dish=smores" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="pavlova.jpg"><div class="card-content"><h2>Pavlova</h2><a href="recipe.html?dish=pavlova" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="baklava.jpg"><div class="card-content"><h2>Baklava</h2><a href="recipe.html?dish=baklava" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="halohalo.jpg"><div class="card-content"><h2>Halo-Halo</h2><a href="recipe.html?dish=halohalo" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="tiramisu.jpg"><div class="card-content"><h2>Tiramisu</h2><a href="recipe.html?dish=tiramisu" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="churros.jpg"><div class="card-content"><h2>Churros</h2><a href="recipe.html?dish=churros" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="bofrot.jpg"><div class="card-content"><h2>Bofrot</h2><a href="recipe.html?dish=bofrot" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="eclair.jpg"><div class="card-content"><h2>Eclair</h2><a href="recipe.html?dish=eclair" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+
+    <div class="card"><img src="macarons.jpg"><div class="card-content"><h2>Macarons</h2><a href="recipe.html?dish=macarons" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+    
+    <div class="card"><img src="icecream.jpg"><div class="card-content"><h2>Ice cream</h2><a href="recipe.html?dish=icecream" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+    
+    <div class="card"><img src="lecheflan.jpg"><div class="card-content"><h2>Leche Flan</h2><a href="recipe.html?dish=lecheflan" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+    
+    <div class="card"><img src="ubehalaya.jpg"><div class="card-content"><h2>Ube Halaya</h2><a href="recipe.html?dish=ubehalaya" class="btn" onclick="createEmojis(event)">View Recipe</a></div></div>
+    
+</div>
+
+    <div class="more-soon">
+        ✨ More coming soon! ✨
+    </div>
+</div>
+
+<script>
+function createEmojis(event) {
+    const emojis = ["✨","🍰","💕","😋","🍝","🧁"];
+    for (let i = 0; i < 6; i++) {
+        const emoji = document.createElement("div");
+        emoji.classList.add("emoji");
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = (event.clientX + Math.random() * 40 - 20) + "px";
+        emoji.style.top = (event.clientY + Math.random() * 20 - 10) + "px";
+        document.body.appendChild(emoji);
+        setTimeout(() => { emoji.remove(); }, 1500);
+    }
+}
+</script>
+
+</body>
+</html>

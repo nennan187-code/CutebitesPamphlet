@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Recipe</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+        font-family: 'Poppins', Sans-Serif;
+        font-weight: 400;
+        background: #fff8f0;
+        padding: 40px;
+    }
+
+    .container {
+        max-width: 700px;
+        margin: auto;
+        background: white;
+        padding: 30px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+        color: #6d4c41;
+    }
+
+    .back {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background: #ff8fa3;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.4s;
+    }
+
+    .back:hover {
+        background: #ff6f91;
+        transform: scale(1.05);
+    }
+
+    #instructions {
+        white-space: pre-line;
+        line-height: 1.6;
+        margin-top: 10px;
+    }
+
+    /* Floating emoji style */
+    .emoji {
+        position: fixed;
+        font-size: 24px;
+        animation: floatUp 1.5s ease-out forwards;
+        pointer-events: none;
+        z-index: 999;
+    }
+
+    @keyframes floatUp {
+        0% { opacity: 1; transform: translateY(0) scale(1); }
+        100% { opacity: 0; transform: translateY(-80px) scale(1.5); }
+    }
+  </style>
+</head>
+
+<body>
+  
+  <div class="container">
+    <h1 id="title"></h1>
+
+    <h3>Ingredients:</h3>
+    <ul id="ingredients"></ul>
+
+    <h3>Instructions:</h3>
+    <p id="instructions"></p>
+
+    <a href="pages.html" class="back" onclick="createEmojis(event)">⬅ Back</a>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const dish = params.get("dish");
+
+const recipes = {
+
+  // =========================
+  // 🍝 MAIN DISHES
+  // =========================
+
+  lasagna: {title:"Lasagna", ingredients:["12 lasagna noodles","500g ground beef","3 cups tomato sauce","1 cup ricotta cheese","2 cups shredded mozzarella","½ cup grated parmesan","1 egg","2 cloves garlic, minced","Salt and pepper to taste"], instructions:"1. Preheat oven to 375°F (190°C).\n2. Cook noodles.\n3. Brown ground beef with garlic, add tomato sauce.\n4. Mix ricotta with egg, salt, pepper.\n5. Layer noodles, meat, ricotta, mozzarella.\n6. Top with mozzarella & parmesan.\n7. Cover with foil, bake 35–40 min.\n8. Remove foil, bake 5–10 min.\n9. Let rest 10 min before slicing."},
+
+  ratatouille: {title:"Ratatouille", ingredients:["1 zucchini","1 eggplant","2 tomatoes","1 bell pepper","1 onion","2 tbsp olive oil","2 cloves garlic, minced","Salt and pepper","1 tsp dried thyme"], instructions:"1. Preheat oven to 375°F.\n2. Slice vegetables thinly.\n3. Sauté onion and garlic.\n4. Spread in baking dish.\n5. Arrange vegetables in pattern.\n6. Drizzle oil, sprinkle salt, pepper, thyme.\n7. Cover, bake 35–45 min until tender."},
+
+  brisket: {title:"Beef Brisket", ingredients:["1.5–2 kg beef brisket","2 tsp salt","2 tsp black pepper","3 cloves garlic, minced","1 cup beef broth","½ cup BBQ sauce (optional)"], instructions:"1. Preheat oven to 300°F.\n2. Season brisket.\n3. Roast with broth, cover, 3–4 hrs.\n4. Optional: brush BBQ, bake 15 min.\n5. Rest 10–15 min."},
+
+  padthai: {title:"Pad Thai", ingredients:["200g rice noodles","200g shrimp or chicken","2 eggs","1 cup bean sprouts","2 tbsp fish sauce","1 tbsp soy sauce","1 tbsp sugar","1 tbsp lime juice","2 tbsp crushed peanuts","2 green onions"], instructions:"1. Soak noodles 10–15 min.\n2. Stir-fry protein.\n3. Scramble eggs.\n4. Add noodles & sauce.\n5. Return protein, add sprouts & onions.\n6. Serve hot, top with peanuts."},
+
+  pierogi: {title:"Pierogi", ingredients:["2 cups flour","½ cup water","1 egg","2 cups mashed potatoes","1 cup shredded cheese","1 onion, chopped","2 tbsp butter","Salt & pepper"], instructions:"1. Make dough.\n2. Prepare filling.\n3. Roll dough, cut circles, fill.\n4. Fold, seal edges.\n5. Boil in salted water.\n6. Optional: pan-fry until golden."},
+
+  biryani: {title:"Biryani", ingredients:["2 cups basmati rice","500g chicken or lamb","2 tbsp vegetable oil","1 cup yogurt","2 onions","2 tsp garam masala","1 tsp turmeric","1 tsp chili powder","3 cloves garlic","Salt"], instructions:"1. Marinate meat 1 hr.\n2. Cook rice 70%.\n3. Layer meat & rice, cover, cook 30–40 min.\n4. Garnish fried onions."},
+
+  paella: {title:"Paella", ingredients:["2 cups rice","500g seafood mix","4 cups broth","1 tsp saffron","1 bell pepper","1 tomato","2 cloves garlic","2 tbsp olive oil","Salt & pepper"], instructions:"1. Sauté garlic, pepper, tomato.\n2. Add rice, stir.\n3. Add broth & saffron, boil.\n4. Arrange seafood.\n5. Simmer 20–25 min, serve hot."},
+
+  goulash: {title:"Goulash", ingredients:["500g beef stew","1 onion","2 cloves garlic","2 tsp paprika","2 tomatoes","2 cups beef broth","Salt & pepper","1 tbsp oil"], instructions:"1. Brown beef.\n2. Add onion & garlic.\n3. Add paprika, tomatoes, broth.\n4. Simmer 1–1.5 hr.\n5. Season."},
+
+  rotisserie: {title:"Rotisserie Chicken", ingredients:["1 whole chicken","2 tbsp olive oil or butter","1 tsp salt","1 tsp pepper","1 tsp paprika","1 tsp garlic powder","1 tsp onion powder","1 tsp dried thyme (optional)"], instructions:"1. Preheat oven 375°F.\n2. Pat chicken dry, rub with oil & spices.\n3. Roast 1 hr 15 min until 165°F.\n4. Rest 10–15 min."},
+
+  pizza: {title:"Pizza", ingredients:["2 cups flour","1 tsp yeast","¾ cup warm water","1 tbsp olive oil","½ tsp salt","1 cup tomato sauce","2 cups shredded mozzarella","Toppings of choice"], instructions:"1. Mix flour, yeast, salt.\n2. Add water & oil, knead dough.\n3. Let rise 1 hour.\n4. Roll out dough.\n5. Spread sauce & add cheese.\n6. Add toppings.\n7. Bake at 475°F for 12–15 min."},
+
+  bibimbap: {title:"Bibimbap", ingredients:["2 cups cooked rice","1 cup sliced beef (or tofu)","1 carrot, julienned","1 zucchini, sliced","1 cup spinach","1 egg","2 tbsp soy sauce","1 tbsp sesame oil"], instructions:"1. Cook vegetables separately.\n2. Cook beef with soy sauce.\n3. Place rice in bowl.\n4. Arrange veggies & beef on top.\n5. Fry egg and place on top.\n6. Drizzle sesame oil & mix before eating."},
+
+  dumplings: {title:"Dumplings", ingredients:["2 cups flour","¾ cup water","1 cup ground pork or veggies","1 tbsp soy sauce","1 tsp ginger","1 clove garlic"], instructions:"1. Mix flour & water to form dough.\n2. Prepare filling.\n3. Roll dough thin & cut circles.\n4. Fill and seal edges.\n5. Steam or boil 8–10 min."},
+
+  poutine: {title:"Poutine", ingredients:["3 cups fries","1 cup cheese curds","1 cup beef gravy"], instructions:"1. Cook fries until crispy.\n2. Place fries on plate.\n3. Sprinkle cheese curds.\n4. Pour hot gravy on top.\n5. Serve immediately."},
+
+  shawarma: {title:"Shawarma", ingredients:["500g chicken thighs","2 tbsp yogurt","2 tsp paprika","1 tsp cumin","1 tsp garlic powder","Pita bread","Lettuce & tomato"], instructions:"1. Marinate chicken 1 hour.\n2. Cook in pan until done.\n3. Slice thinly.\n4. Fill pita with chicken & veggies.\n5. Add sauce if desired."},
+
+  chowmein: {title:"Chow Mein", ingredients:["200g noodles","1 cup sliced chicken or shrimp","1 cup cabbage","1 carrot, sliced","2 tbsp soy sauce","1 tbsp oil"], instructions:"1. Cook noodles.\n2. Stir-fry protein.\n3. Add vegetables.\n4. Toss noodles with soy sauce.\n5. Stir-fry 2–3 minutes."},
+
+  enchiladas: {title:"Enchiladas", ingredients:["8 tortillas","2 cups shredded chicken or beef","1 cup enchilada sauce","1 cup shredded cheese","½ cup chopped onion","1 tsp cumin","Salt & pepper"], instructions:"1. Preheat oven to 375°F.\n2. Mix meat with cumin, salt, pepper.\n3. Fill tortillas with meat & roll up.\n4. Place seam-side down in baking dish.\n5. Pour enchilada sauce over top.\n6. Sprinkle cheese & onions.\n7. Bake 20–25 minutes until bubbly."},
+
+  ramen: {title:"Ramen", ingredients:["2 packs ramen noodles","4 cups chicken or vegetable broth","1 boiled egg","½ cup sliced mushrooms","½ cup spinach","2 tbsp soy sauce","1 tsp sesame oil","Green onions"], instructions:"1. Bring broth to a boil.\n2. Add noodles and cook 3–4 minutes.\n3. Stir in soy sauce & sesame oil.\n4. Add mushrooms & spinach.\n5. Pour into bowl.\n6. Top with boiled egg & green onions."},
+carbonara: {title: "Spaghetti Carbonara", ingredients: ["200g spaghetti", "100g pancetta or bacon, diced", "2 eggs", "50g grated parmesan", "2 cloves garlic, minced", "Salt & black pepper", "1 tbsp olive oil"], instructions: "1. Cook spaghetti until al dente.\n" + "2. Fry pancetta or bacon  with garlic in olive oil.\n" + "3. Beat eggs with parmesan, salt, and pepper.\n" + "4. Drain pasta, add to pan with pancetta or bacon.\n" + "5. Remove from heat, pour egg mixture, stir quickly.\n" + "6. Serve immediately with extra parmesan."
+},
+adobo: {
+  title: "Adobo",
+  ingredients: [
+    "1 kg chicken or pork",
+    "½ cup soy sauce",
+    "½ cup vinegar",
+    "1 head garlic, crushed",
+    "2 bay leaves",
+    "1 tsp black peppercorns",
+    "1 cup water",
+    "Salt to taste"
+  ],
+  instructions:
+    "1. Combine meat, soy sauce, vinegar, garlic, bay leaves, peppercorns, and water in a pot.\n" +
+    "2. Marinate at least 30 minutes.\n" +
+    "3. Simmer over medium heat until meat is tender and sauce is reduced.\n" +
+    "4. Serve hot with rice."
+},
+
+sinigang: {
+  title: "Sinigang",
+  ingredients: [
+    "500g pork or shrimp",
+    "1 tomato, quartered",
+    "1 onion, quartered",
+    "1 radish, sliced",
+    "1 cup string beans",
+    "1 packet tamarind soup base",
+    "6 cups water",
+    "Salt to taste"
+  ],
+  instructions:
+    "1. Boil water, add pork/shrimp, tomato, and onion.\n" +
+    "2. Add tamarind base, stir.\n" +
+    "3. Add radish and string beans, cook until tender.\n" +
+    "4. Season with salt, serve hot."
+},
+
+lechon: {
+  title: "Lechon",
+  ingredients: [
+    "1 whole pig or 2–3 kg pork belly",
+    "5 cloves garlic, minced",
+    "1 bunch lemongrass",
+    "Salt and pepper",
+    "Oil for basting"
+  ],
+  instructions:
+    "1. Rub pork with garlic, salt, and pepper.\n" +
+    "2. Stuff with lemongrass.\n" +
+    "3. Roast in oven at 350°F for 2–3 hours or until skin is crispy, basting occasionally.\n" +
+    "4. Slice and serve."
+},
+
+chickeninasal: {
+  title: "Chicken Inasal",
+  ingredients: [
+    "1 whole chicken, spatchcocked",
+    "½ cup vinegar",
+    "¼ cup calamansi or lemon juice",
+    "5 cloves garlic, minced",
+    "2 tsp salt",
+    "1 tsp pepper",
+    "2 tbsp annatto oil"
+  ],
+  instructions:
+    "1. Marinate chicken with vinegar, calamansi, garlic, salt, pepper, and annatto oil for 1–2 hours.\n" +
+    "2. Grill over medium heat, basting with marinade until cooked and slightly charred.\n" +
+    "3. Serve hot with rice."
+},
+
+// =========================
+  // 🍰 DESSERTS
+  // =========================
+
+  cake: {title:"Chocolate Cake", ingredients:["2 cups flour","1 cup cocoa","2 tsp baking powder","1 tsp baking soda","½ tsp salt","1 cup sugar","2 eggs","1 cup milk","½ cup oil","2 tsp vanilla","1 cup boiling water"], instructions:"1. Preheat oven 350°F.\n2. Mix dry.\n3. Add sugar, eggs, milk, oil, vanilla.\n4. Stir until mixed well.\n5. Bake 30–35 min, cool."},
+
+  cupcakes: {title:"Cupcakes", ingredients:["1½ cups flour","1 cup sugar","½ cup butter","2 eggs","½ cup milk","1 tsp vanilla","1½ tsp baking powder","¼ tsp salt"], instructions:"1. Preheat oven 350°F.\n2. Mix butter & sugar.\n3. Beat in eggs.\n4. Mix in dry with milk.\n5. Add vanilla.\n6. Fill liners 2/3.\n7. Bake 18–20 min."},
+
+  brownies: {title:"Brownies", ingredients:["1 cup cocoa","1 cup sugar","2 eggs","½ cup butter","1 cup flour","1 tsp vanilla","½ tsp salt"], instructions:"1. Preheat oven 350°F.\n2. Mix cocoa, sugar, butter.\n3. Add eggs & vanilla.\n4. Fold in flour & salt.\n5. Bake 25 min, cool."},
+
+  croissant: {title:"Croissant", ingredients:["2 cups flour","1 cup cold butter","1 tsp yeast","½ cup warm milk","1 tbsp sugar","½ tsp salt"], instructions:"1. Dissolve yeast in milk.\n2. Mix flour & salt, add yeast.\n3. Knead dough.\n4. Roll, fold butter, fold multiple times.\n5. Chill between folds.\n6. Shape, let rise 1 hr.\n7. Bake 375°F 15–20 min."},
+
+  smores: {title:"S'mores", ingredients:["8 graham crackers","4 chocolate bars","8 marshmallows"], instructions:"1. Break crackers.\n2. Place chocolate on one cracker.\n3. Toast marshmallow.\n4. Top chocolate with marshmallow & cracker.\n5. Enjoy!"},
+
+  pavlova: {title:"Pavlova", ingredients:["4 egg whites","1 cup sugar","1 tsp vanilla","1 tsp vinegar","1 cup whipped cream","Fresh fruit"], instructions:"1. Beat egg whites stiff.\n2. Slowly add sugar.\n3. Mix in vanilla & vinegar.\n4. Bake at 250°F for 1 hour.\n5. Cool, top with cream & fruit."},
+
+  baklava: {title:"Baklava", ingredients:["1 package phyllo dough","2 cups chopped nuts","1 cup melted butter","1 cup sugar","½ cup honey","1 tsp cinnamon"], instructions:"1. Layer phyllo & butter.\n2. Add nuts mixed with cinnamon.\n3. Repeat layers.\n4. Cut before baking.\n5. Bake 350°F for 40 min.\n6. Pour warm honey syrup on top."},
+
+  halohalo: {title:"Halo-Halo", ingredients:["1 cup shaved ice","½ cup sweetened beans","½ cup fruit mix","1 scoop ube or vanilla ice cream","Evaporated milk"], instructions:"1. Layer sweet beans & fruit.\n2. Add shaved ice.\n3. Pour milk over top.\n4. Add ice cream.\n5. Mix before eating."},
+
+  tiramisu: {title:"Tiramisu", ingredients:["24 ladyfingers","1 cup espresso","1 cup mascarpone","1 cup heavy cream","½ cup sugar","Cocoa powder"], instructions:"1. Dip ladyfingers in espresso.\n2. Layer in dish.\n3. Mix mascarpone, cream & sugar.\n4. Spread over layer.\n5. Repeat layers.\n6. Chill 4 hours.\n7. Dust with cocoa."},
+
+  churros: {title:"Churros", ingredients:["1 cup water","2 tbsp sugar","2 tbsp butter","1 cup flour","1 egg","Oil for frying","Cinnamon sugar"], instructions:"1. Boil water, sugar, butter.\n2. Stir in flour.\n3. Add egg.\n4. Pipe into hot oil.\n5. Fry until golden.\n6. Roll in cinnamon sugar."},
+
+  bofrot: {title:"Bofrot", ingredients:["2 cups flour","½ cup sugar","1 tsp yeast","¾ cup warm water","½ tsp nutmeg","Oil for frying"], instructions:"1. Mix flour, sugar, yeast, nutmeg.\n2. Add warm water.\n3. Let rise 1 hour.\n4. Drop spoonfuls into hot oil.\n5. Fry until golden brown.\n6. Drain and serve."},
+
+  eclair: {title:"Eclair", ingredients:["1 cup water","½ cup butter","1 cup flour","3 eggs","1 cup pastry cream","½ cup chocolate ganache"], instructions:"1. Boil water & butter.\n2. Stir in flour until smooth.\n3. Cool slightly, beat in eggs.\n4. Pipe onto baking sheet.\n5. Bake at 400°F for 20–25 min.\n6. Cool, fill with pastry cream.\n7. Dip tops in chocolate ganache."},
+
+  macarons: {title:"Macarons", ingredients:["1 cup almond flour","1 cup powdered sugar","2 egg whites","¼ cup granulated sugar","½ tsp vanilla","Buttercream or ganache filling"], instructions:"1. Whip egg whites until foamy.\n2. Slowly add sugar, beat stiff peaks.\n3. Fold in almond flour & powdered sugar.\n4. Pipe small circles onto tray.\n5. Rest 30 minutes.\n6. Bake at 300°F for 15–18 min.\n7. Cool, fill, and sandwich together."},
+  
+  icecream: {title: "Vanilla Ice Cream", ingredients: ["2 cups heavy cream", "1 cup whole milk", "¾ cup sugar", "1 tbsp vanilla extract"], instructions: "1. Mix cream, milk, sugar, and vanilla.\n" + "2. Chill mixture 1 hour.\n" + "3. Pour into ice cream maker, churn until frozen.\n" + "4. Freeze 2–3 hours for firm texture.\n" + "5. Serve cold."},
+ 
+ lecheflan: {title: "Leche Flan", ingredients: ["10 egg yolks", "1 can condensed milk", "1 can evaporated milk", "1 cup sugar", "1 tsp vanilla extract"], instructions: "1. Caramelize sugar in pan, pour into mold.\n" + "2. Beat egg yolks, condensed milk, evaporated milk, and vanilla.\n" + "3. Pour mixture over caramel.\n" + "4. Steam or bake in water bath for 45–60 minutes.\n" + "5. Chill, then invert and serve."},
+
+ ubehalaya: {title: "Ube Halaya", ingredients: ["2 cups grated ube (purple yam)", "1 can condensed milk", "1 can coconut milk", "½ cup butter", "Sugar to taste"], instructions: "1. In pan, cook ube with butter over medium heat.\n" + "2. Add condensed milk and coconut milk, stir continuously.\n" + "3. Cook until mixture thickens.\n" + "4. Pour into mold, cool and serve."}
+};
+  
+  if (recipes[dish]) {
+    document.getElementById("title").textContent = recipes[dish].title;
+    recipes[dish].ingredients.forEach(item => {
+        let li = document.createElement("li");
+        li.textContent = item;
+        document.getElementById("ingredients").appendChild(li);
+    });
+    document.getElementById("instructions").textContent = recipes[dish].instructions;
+} else {
+    document.getElementById("title").textContent = "Recipe not found";
+    document.getElementById("instructions").textContent = "";
+}
+
+// Floating emojis function
+function createEmojis(event) {
+    const emojis = ["✨","🍰","💕","😋","🍝","🧁"];
+    for (let i = 0; i < 6; i++) {
+        const emoji = document.createElement("div");
+        emoji.classList.add("emoji");
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = (event.clientX + Math.random() * 40 - 20) + "px";
+        emoji.style.top = (event.clientY + Math.random() * 20 - 10) + "px";
+        document.body.appendChild(emoji);
+        setTimeout(() => { emoji.remove(); }, 1500);
+    }
+}
+</script>
+
+</body>
+</html>
